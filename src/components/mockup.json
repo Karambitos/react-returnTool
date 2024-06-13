@@ -1,0 +1,39 @@
+[
+  {
+  "id": 4,
+  "deliveryId": "9623862100000",
+  "deliveryOrderId": "447654b3-2c3c-4652-9ef2-fdc5da2554ad",
+  "shippedItems": [
+    {
+      "sku": "4899046688999",
+      "quantity": 12
+    },
+    {
+      "sku": "4567222300001",
+      "quantity": 1
+    }
+  ]
+},
+  {
+    "id": 5,
+    "deliveryId": "9623862100001",
+    "deliveryOrderId": "447654b3-2c3c-4652-9ef2-fdc5da2554b6",
+    "shippedItems": [
+      {
+        "sku": "4899046688109",
+        "quantity": 1
+      }
+    ]
+  },
+{
+  "id": 6,
+  "deliveryId": "9623862100002",
+  "deliveryOrderId": "5367acf7-1a0c-4eec-9128-25b91ec230e7",
+  "shippedItems": [
+    {
+      "sku": "4567222311111",
+      "quantity": 1
+    }
+  ]
+  }
+]
