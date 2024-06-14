@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { TextField, RadioGroup, FormControlLabel, Radio, CircularProgress, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, RadioGroup, FormControlLabel, Radio, CircularProgress, Paper, Box, Typography } from '@mui/material';
 
 interface IDSelectionProps {
     loading: boolean;
@@ -8,11 +8,10 @@ interface IDSelectionProps {
     onChange: (data: { type: string; id: string }) => void;
 }
 
-const IDSelection: React.FC<IDSelectionProps> = ({loading, error, item, onChange = () => {} }) => {
+const IDSelection: React.FC<IDSelectionProps> = ({ loading, error, item, onChange = () => {} }) => {
     const [type, setType] = useState(item?.type || 'deliveryId');
     const [id, setId] = useState(item?.id || '');
     const [errorValidation, setErrorValidation] = useState('');
-
 
     function isUUID(str: string) {
         return /^(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89AB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$/.test(str);
@@ -39,7 +38,7 @@ const IDSelection: React.FC<IDSelectionProps> = ({loading, error, item, onChange
     };
 
     return (
-        <div>
+        <Box sx={{  marginTop: 2, marginBottom: 3 }}>
             <RadioGroup row value={type} onChange={handleTypeChange}>
                 <FormControlLabel
                     value="deliveryId"
@@ -52,21 +51,21 @@ const IDSelection: React.FC<IDSelectionProps> = ({loading, error, item, onChange
                     label="DeliveryOrderId"
                 />
             </RadioGroup>
-            <Box sx={{
-                display: 'inline-block',
-                position: 'relative'
-            }}>
+            <Box sx={{ position: 'relative' }}>
                 <TextField
-                    label={type}
+                    label={type === 'deliveryId' ? 'DeliveryId' : 'DeliveryOrderId'}
                     value={id}
                     onChange={handleIdChange}
                     onBlur={handleBlur}
                     error={!!errorValidation || !!error}
                     helperText={errorValidation || error}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mt: 2 }}
                 />
-                {loading && <CircularProgress sx={{ position: 'absolute', top: 10, right: 'calc(50% - 20px)' }} />}
+                {loading && <CircularProgress sx={{ position: 'absolute', top: '50%', right: 8, transform: 'translateY(-50%)' }} />}
             </Box>
-        </div>
+        </Box>
     );
 };
 
