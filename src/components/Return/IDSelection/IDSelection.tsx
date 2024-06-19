@@ -22,48 +22,46 @@ const IDSelection: React.FC<IDSelectionProps> = ({ loading, error, item, onChang
     };
 
     const handleIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setId(event.target.value);
+        const { value } = event.target;
+        setId(value);
         setErrorValidation('');
-    };
-
-    const handleBlur = () => {
         if (type === 'deliveryId' && !/^\d+$/.test(id)) {
             setErrorValidation('DeliveryId must be numeric');
         } else if (type === 'deliveryOrderId' && !isUUID(id)) {
             setErrorValidation('DeliveryOrderId must be a valid UUID');
         } else {
             setErrorValidation('');
-            onChange({ type, id });
+            onChange({ type, id: value });
         }
     };
 
     return (
-        <Box sx={{  marginTop: 2, marginBottom: 3 }}>
+        <Box sx={{  marginTop: 2, marginBottom: 3 }} data-testid="test-id-selection">
             <RadioGroup row value={type} onChange={handleTypeChange}>
                 <FormControlLabel
                     value="deliveryId"
-                    control={<Radio />}
+                    control={<Radio data-testid="test-radio-delivery-id" />}
                     label="DeliveryId"
                 />
                 <FormControlLabel
                     value="deliveryOrderId"
-                    control={<Radio />}
+                    control={<Radio data-testid="test-radio-delivery-order-id"/>}
                     label="DeliveryOrderId"
                 />
             </RadioGroup>
             <Box sx={{ position: 'relative' }}>
                 <TextField
+                    data-testid="test-input-id"
                     label={type === 'deliveryId' ? 'DeliveryId' : 'DeliveryOrderId'}
                     value={id}
                     onChange={handleIdChange}
-                    onBlur={handleBlur}
                     error={!!errorValidation || !!error}
                     helperText={errorValidation || error}
                     fullWidth
                     variant="outlined"
                     sx={{ mt: 2 }}
                 />
-                {loading && <CircularProgress sx={{ position: 'absolute', top: '50%', right: 8, transform: 'translateY(-50%)' }} />}
+                {loading && <CircularProgress data-testid="test-loading-indicator" sx={{ position: 'absolute', top: 22, right: '50%' }} />}
             </Box>
         </Box>
     );

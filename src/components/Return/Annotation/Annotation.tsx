@@ -22,6 +22,7 @@ const Annotation: React.FC<AnnotationProps> = ({ sku, annotationInit, onAnnotati
 
     return (
         <TextField
+            data-testid="test-annotation"
             label="Annotation"
             value={annotation}
             onChange={handleAnnotationChange}

@@ -77,7 +77,7 @@ const ItemSelection: React.FC<ItemSelectionProps> = ({ items, shippedItem, onIte
     };
 
     return (
-        <Box>
+        <Box data-testid='test-item-selection'>
             {items.map((item) => (
                 <Box key={item.sku} sx={{ mb: 3 }}>
                     <Typography sx={{ mb: 2 }} variant="h6">SKU: {item.sku}</Typography>

@@ -25,4 +25,12 @@
       "@testing-library/jest-dom"
     ]
   },
+  "include": [
+    ".storybook/**/*",
+    "__mocks__",
+    "__tests__",
+    "src",
+    "index.d.ts",
+    ".eslintrc",
+  ]
 }

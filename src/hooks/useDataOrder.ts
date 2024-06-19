@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import data from "../components/mockup.json";
-import { IOrderInfo, IShippedItem } from "../types";
+import axios from 'axios';
+import { IOrderInfo, IShippedItem } from '../types';
 
 interface IDataOrder {
     loading: boolean;
@@ -8,57 +8,48 @@ interface IDataOrder {
     order: IOrderInfo | null;
 }
 
-interface IItem {
-    id: string;
-    deliveryId: string;
-    deliveryOrderId: string;
-    shippedItems: IShippedItem[];
-}
+const BASE_URL = 'https://666c0f8e49dbc5d7145c6eb1.mockapi.io/api/v1';
 
 const useDataOrder = ({ type, id }: { type: string; id: string }): IDataOrder => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [order, setOrder] = useState<IOrderInfo | null>(null);
 
-    const fetchData = (paramType: string, paramValue: string) => {
-        return new Promise<IItem>((resolve, reject) => {
-            setTimeout(() => {
-                const result =
-                    paramType === 'deliveryId'
-                        ? data.filter(item => item.deliveryId === paramValue)
-                        : data.filter(item => item.deliveryOrderId === paramValue);
-                if (result && result.length > 0) {
-                    // @ts-ignore
-                    resolve(result[0]);
-                    setError(null);
-                } else {
-                    setError('No data found');
-                    reject(new Error('Data not found'));
-                }
-            }, 1000);
-        });
+    // Function to fetch order by deliveryId or deliveryOrderId
+    const fetchData = async (paramType: string, paramValue: string) => {
+        try {
+            setLoading(true);
+            setError(null);
+            let response;
+            if (paramType === 'deliveryId') {
+                response = await axios.get(`${BASE_URL}/orders?deliveryId=${paramValue}`);
+            } else {
+                response = await axios.get(`${BASE_URL}/orders?deliveryOrderId=${paramValue}`);
+            }
+            if (response.data.length > 0) {
+                setOrder(response.data[0]);
+            } else {
+                setError('No data found');
+            }
+        } catch (error) {
+            // @ts-ignore
+            console.error('Error:', error.message);
+            setError('Order not found');
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
         if (type && id) {
-            setLoading(true);
-            fetchData(type, id)
-                .then(response => {
-                    // @ts-ignore
-                    setOrder(response);
-                    setLoading(false);
-                })
-                .catch(error => {
-                    console.error('Error:', error.message);
-                    setLoading(false);
-                });
+            fetchData(type, id);
         }
     }, [type, id]);
 
     return {
         loading,
         error,
-        order
+        order,
     };
 };
 

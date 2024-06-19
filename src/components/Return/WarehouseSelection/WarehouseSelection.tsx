@@ -8,10 +8,11 @@ interface WarehouseSelectionProps {
 }
 
 const WarehouseSelection: React.FC<WarehouseSelectionProps> = ({ value, onChange }) => (
-    <Box sx={{  marginTop: 2, marginBottom: 3 }}>
+    <Box sx={{  marginTop: 2, marginBottom: 3 }} data-testid="test-warehouse-selection">
         <FormControl fullWidth variant="outlined">
             <InputLabel>Warehouse</InputLabel>
             <Select
+                data-testid="test-warehouse-selection-select"
                 value={value}
                 onChange={onChange}
                 label="Warehouse"

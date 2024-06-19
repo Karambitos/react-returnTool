@@ -10,3 +10,22 @@
 #  ...tseslint.configs.recommended,
 #  pluginReactConfig,
 #];
+
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "tsconfigRootDir": "./",
+    "project": [
+      "./tsconfig.json",
+      "./jest.config.ts",
+      "./src/setupTests.ts"
+    ]
+  },
+  "ignorePatterns": [
+    "babel.config.js",
+    "dist",
+    "jest.config.ts",
+    "jest.setup.ts",
+    "webpack.config.ts"
+  ],
+}

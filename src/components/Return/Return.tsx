@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Typography, Paper, Button, StepContent, StepLabel, Step, Stepper, Box } from '@mui/material';
 import { SelectChangeEvent } from "@mui/material/Select";
 import { IDSelection, ItemSelection, LogisticianSelection, Summary, WarehouseSelection } from "./index";
@@ -6,14 +6,11 @@ import { IOrderInfo, IShippedItem } from "../../types";
 import useDataOrder from "../../hooks/useDataOrder";
 
 const Return = () => {
+
     const [id, setId] = useState('');
     const [type, setType] = useState('deliveryId');
     const [returnInfo, setReturnInfo] = useState<IOrderInfo>({} as IOrderInfo);
     const { loading, error, order } = useDataOrder({ type, id });
-
-    useEffect(() => {
-        console.log(loading, error, order)
-    }, [order]);
 
     const handleLogisticianChange = (event: SelectChangeEvent) => {
         setReturnInfo({ ...returnInfo, logistician: event.target.value as string });
@@ -41,11 +38,6 @@ const Return = () => {
         }
     };
 
-    const handleFinish = () => {
-        console.log('Submit return info:', returnInfo);
-        // Add logic here to submit return information, e.g., send data to server
-    };
-
     const [activeStep, setActiveStep] = useState(0);
     const [completedSteps, setCompletedSteps] = useState<boolean[]>([false, false, false, false, true]);
 
@@ -56,9 +48,6 @@ const Return = () => {
     };
 
     const handleNext = () => {
-        if (activeStep === steps.length - 1) {
-            handleFinish();
-        }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
@@ -140,7 +129,7 @@ const Return = () => {
             </Stepper>
             {activeStep === steps.length && (
                 <Paper square elevation={0} sx={{ p: 3, mt: 2 }}>
-                    <Typography>All steps completed - your order number is 'Some Order Number'</Typography>
+                    <Typography>All steps completed - your order {id} is on its way!</Typography>
                     <Button onClick={handleReset} sx={{ mt: 1 }}>
                         Reset
                     </Button>

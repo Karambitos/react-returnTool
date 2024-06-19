@@ -21,7 +21,7 @@ const useQuestions = () => {
     };
 
     return {
-        allQuestions,
+        allQuestions, // questions
         getTextByStringVal
     };
 };

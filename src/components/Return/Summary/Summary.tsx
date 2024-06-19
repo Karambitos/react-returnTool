@@ -11,16 +11,16 @@ const Summary: React.FC<SummaryProps> = ({ summary }) => {
     const { getTextByStringVal } = useQuestions();
 
     return (
-        <Paper elevation={3} sx={{ padding: 3, marginTop: 2, marginBottom: 3 }}>
+        <Paper data-testid="test-summary" elevation={3} sx={{ padding: 3, marginTop: 2, marginBottom: 3 }}>
             <Typography variant="h4" component="h2" gutterBottom>
                 Order Summary
             </Typography>
             <Divider sx={{ marginBottom: 2 }} />
             <Box sx={{ marginBottom: 2 }}>
-                <Typography variant="body1" component="div">
+                <Typography variant="body1">
                     <strong>Logistician:</strong> {summary.logistician}
                 </Typography>
-                <Typography variant="body1" component="div">
+                <Typography variant="body1">
                     <strong>Warehouse:</strong> {summary.warehouse}
                 </Typography>
             </Box>
@@ -30,19 +30,29 @@ const Summary: React.FC<SummaryProps> = ({ summary }) => {
                     <ListItem key={index} sx={{ alignItems: 'flex-start' }}>
                         <ListItemText
                             primary={
-                                <Typography variant="body1">
+                                <Typography variant="body1" component="span">
                                     <strong>SKU:</strong> {item.sku} - <strong>Quantity:</strong> {item.quantity}
                                 </Typography>
                             }
                             secondary={
                                 <>
                                     {item.reason && (
-                                        <Typography variant="body2" color="textSecondary">
+                                        <Typography
+                                            variant="body2"
+                                            color="textSecondary"
+                                            component="span"
+                                            sx={{ display: 'block' }}
+                                        >
                                             <strong>Reason:</strong> {getTextByStringVal(item.reason)}
                                         </Typography>
                                     )}
                                     {item.annotation && (
-                                        <Typography variant="body2" color="textSecondary">
+                                        <Typography
+                                            variant="body2"
+                                            color="textSecondary"
+                                            component="span"
+                                            sx={{ display: 'block' }}
+                                        >
                                             <strong>Annotation:</strong> {item.annotation}
                                         </Typography>
                                     )}
