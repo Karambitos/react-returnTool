@@ -40,6 +40,7 @@ const ItemSelection: React.FC<ItemSelectionProps> = ({ items, shippedItem, onIte
         const updatedItems = selectedItems.map((item) =>
             item.sku === sku ? { ...item, ...newData } : item
         );
+        console.log(updatedItems)
         validateSelection(updatedItems);
         setSelectedItems(updatedItems);
         const itemsForReturn = updatedItems.filter((item) => item.quantity > 0);
@@ -60,21 +61,26 @@ const ItemSelection: React.FC<ItemSelectionProps> = ({ items, shippedItem, onIte
 
     const validateSelection = (updatedItems: IShippedItem[]) => {
         let hasSelectedQuantity = false;
+        let hasMissingReason = false;
+
         updatedItems.forEach((item) => {
             if (item.quantity > 0) {
                 hasSelectedQuantity = true;
                 if (!item.reason) {
-                    setError(`Please provide a reason for return`);
-                } else {
-                    setError('');
+                    hasMissingReason = true;
                 }
             }
-
         });
+
         if (!hasSelectedQuantity) {
             setError('Please select at least one item quantity.');
+        } else if (hasMissingReason) {
+            setError('Please provide a reason for return for all selected items.');
+        } else {
+            setError('');
         }
     };
+
 
     return (
         <Box data-testid='test-item-selection'>
